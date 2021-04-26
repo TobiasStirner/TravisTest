@@ -1,0 +1,35 @@
+language: generic
+dist: xenial
+env: PYTHON_VERSION=3.7.1
+python: 3.7
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install python3
+
+install:
+  #- pip install -r requirements.txt
+script:
+  - echo "Script is getting started"
+
+before_deploy: "echo 'ready for s3 Deployment?'"
+
+deploy:
+    provider: s3
+    access_key_id: $AccessKeyID
+    secret_access_key: $SecretAccessKey
+    region: eu-central-1
+    bucket: jumpstart123
+    local_dir: Local
+    upload-dir: Dummy
+    skip_cleanup: true
+   - echo "On this machine \$LANG=$LANG"
+
+after_deploy: "echo 'Done with s3 files deployment?'"
+
+branches:
+  only:
+    - master
+
+notifications:
+  email: false
